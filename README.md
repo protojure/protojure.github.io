@@ -52,7 +52,6 @@ First class Clojure support for Google [Protocol Buffers](https://developers.goo
 Below is a simple [`.proto`](https://developers.google.com/protocol-buffers/) Protocol Buffer (protobuf or pb) definition:
 
 ```
-
 syntax = "proto3";
 package com.example.addressbook;
 
@@ -403,6 +402,7 @@ instead of a map as above in the unary example
 
 * Server
 ```
+{% raw %}
 (deftype Greeter []
   greeter/Service
   (SayRepeatHello
@@ -414,6 +414,7 @@ instead of a map as above in the unary example
         (async/close! resp-chan))
       {:status 200
        :body resp-chan})))
+{% endraw %}
 ```
 
 ### Client Streaming Example
