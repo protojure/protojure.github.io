@@ -5,8 +5,13 @@ Protojure is first-class [Clojure](https://clojure.org/) support for
 
 [https://github.com/protojure](https://github.com/protojure)
 
+### Etymology
+
+Protojure is a portmanteau of **Proto**-col Buffers and Clo-**jure**
+
 ### Table of Contents
 
+* [Protoc-plugin Installation](#protoc-gen-clojure-installation)
 * [Quick Start](#quick-start)
 * [Status](#status)
 * [Features](#features)
@@ -17,15 +22,28 @@ Protojure is first-class [Clojure](https://clojure.org/) support for
 * [Clojure Docs](#clojure-docs)
 * [Contributing](#contributing)
 
+### Protoc-plugin Installation
+
+As a first step to follow along with the tutorials here, please clone 
+[protoc-plugin](https://github.com/protojure/protoc-plugin) and run
+```
+make bin
+make install
+```
+
+This and all following steps rely on the presence of a jdk and [Leiningen](https://leiningen.org/)
+
 ### Quick Start
 
 #### Quick Start Prerequisites:
 1. [Leiningen](https://leiningen.org/)
+2. [Protoc](https://github.com/protocolbuffers/protobuf/releases/tag/v3.9.1)
 
 #### Quick Start Guide:
 
 Run `lein new protojure <your project name>`
-* This instantiates a leiningen template that creates a
+
+This instantiates a leiningen template that creates a
 runnable application hosting gRPC endpoints. 
 
 Refer to the README.md in the created project for instructions on how to use your
@@ -295,7 +313,7 @@ And creating a client connection:
 user=> (def client @(grpc.http2/connect {:uri "http://localhost:8080"}))
 #'user/client
 ```
-* Note: The `@` is a syntactic shortcut within [clojure for promises](https://clojuredocs.org/clojure.core/promise).
+Note: The `@` is a syntactic shortcut within [clojure for promises](https://clojuredocs.org/clojure.core/promise).
 Without the deref, we would be interring a ref to the client 'Promise', not the eventually returned connected client.
 
 Now we can use our `call-Hello` function from above, and with the protoc-plugin example `hello` running we will receive
@@ -327,7 +345,7 @@ You may now interoperate with a client or server written in any other language t
 ```
 
 ### Unary Endpoint Example
-* [Protocol Buffer Definition](https://github.com/protojure/protoc-plugin/blob/master/examples/hello/resources/addressbook.proto)
+[Protocol Buffer Definition](https://github.com/protojure/protoc-plugin/blob/master/examples/hello/resources/addressbook.proto)
 ```
 syntax = "proto3";
 package com.example.addressbook;
