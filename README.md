@@ -11,16 +11,32 @@ Protojure is a portmanteau of **Proto**-col Buffers and Clo-**jure**
 
 ### Table of Contents
 
-* [Protoc-plugin Installation](#protoc-gen-clojure-installation)
-* [Quick Start](#quick-start)
-* [Status](#status)
 * [Features](#features)
+* [Status](#status)
+* [Protoc-plugin Installation](#protoc-plugin-installation)
+* [Quick Start](#quick-start)
 * [Protocol Buffers in clj](#protocol-buffers-in-clj)
 * [gRPC Services in clj](#grpc-services-in-clj)
 * [Unary Endpoint Examples](#unary-endpoint-example)
 * [Streaming Examples](#server-streaming-example)
 * [Clojure Docs](#clojure-docs)
 * [Contributing](#contributing)
+
+### Features
+Features
+
+First class Clojure support for Google [Protocol Buffers](https://developers.google.com/protocol-buffers/) and 
+[gRPC Services](https://grpc.io/)
+
+* Supports Protobuf message serialization (tested with proto3 format)
+* Support for GRPC Clients and Servers
+* In-process [GRPC-WEB](https://github.com/grpc/grpc-web) Proxy
+* core.async based GRPC streaming
+* Integration with the [Pedestal](https://github.com/pedestal/pedestal) web framework included, and extensible to support others (Ring, Compojure, etc)
+
+### Status
+
+[CircleCI-hosted master branch & PR builds](https://circleci.com/gh/protojure)
 
 ### Protoc-plugin Installation
 
@@ -48,22 +64,6 @@ runnable application hosting gRPC endpoints.
 
 Refer to the README.md in the created project for instructions on how to use your
 own `.proto` Protocol Buffer and gRPC Service definitions.
-
-### Status
-
-[CircleCI-hosted master branch & PR builds](https://circleci.com/gh/protojure)
-
-### Features
-Features
-
-First class Clojure support for Google [Protocol Buffers](https://developers.google.com/protocol-buffers/) and 
-[gRPC Services](https://grpc.io/)
-
-* Supports Protobuf message serialization (tested with proto3 format)
-* Support for GRPC Clients and Servers
-* In-process [GRPC-WEB](https://github.com/grpc/grpc-web) Proxy
-* core.async based GRPC streaming
-* Integration with the [Pedestal](https://github.com/pedestal/pedestal) web framework included, and extensible to support others (Ring, Compojure, etc)
 
 ### Protocol Buffers in clj
 
