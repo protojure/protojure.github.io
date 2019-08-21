@@ -204,7 +204,7 @@ service Greeter {
 ```
 
 The service definition defines an endpoint (often reachable at some well-known URL or IP), called Greeter. The Greeter service
-exposes a method called SayHello. We may interact with the SayHello method by contacting the Greeter service and sending
+exposes a method called Hello. We may interact with the Hello method by contacting the Greeter service and sending
 a HelloRequest message. Refer to [Protocol Buffers in clj](#protocol-buffers-in-clj) above for a walkthrough of protobuf
 with protojure. 
 
@@ -371,6 +371,7 @@ service Greeter {
 ```
 * Server Handler
 
+{% raw %}
 ```
 (deftype Greeter []
   greeter/Service
@@ -378,8 +379,9 @@ service Greeter {
     [this {{:keys [name]} :grpc-params :as request}]
     {:status 200
      :body {:message (str "Hello, " name)}}))
-     
 ```
+{% endraw %}
+
 Include the below in the interceptors passed to
 the pedestal routes key:
 
@@ -401,8 +403,8 @@ Simply return a [core.async](https://github.com/clojure/core.async)
 instead of a map as above in the unary example
 
 * Server
-```
 {% raw %}
+```
 (deftype Greeter []
   greeter/Service
   (SayRepeatHello
@@ -414,8 +416,9 @@ instead of a map as above in the unary example
         (async/close! resp-chan))
       {:status 200
        :body resp-chan})))
-{% endraw %}
 ```
+{% endraw %}
+
 
 ### Client Streaming Example
 Identical to the above Client example for unary -- instead of closing the channels after pushing a single map,
