@@ -12,7 +12,6 @@ Protojure is a portmanteau of **Proto**-col Buffers and Clo-**jure**
 ### Table of Contents
 
 * [Features](#features)
-* [Status](#status)
 * [Protoc-plugin Installation](#protoc-plugin-installation)
 * [Quick Start](#quick-start)
 * [Protocol Buffers in clj](#protocol-buffers-in-clj)
@@ -23,7 +22,6 @@ Protojure is a portmanteau of **Proto**-col Buffers and Clo-**jure**
 * [Contributing](#contributing)
 
 ### Features
-Features
 
 First class Clojure support for Google [Protocol Buffers](https://developers.google.com/protocol-buffers/) and 
 [gRPC Services](https://grpc.io/)
@@ -33,10 +31,6 @@ First class Clojure support for Google [Protocol Buffers](https://developers.goo
 * In-process [GRPC-WEB](https://github.com/grpc/grpc-web) Proxy
 * core.async based GRPC streaming
 * Integration with the [Pedestal](https://github.com/pedestal/pedestal) web framework included, and extensible to support others (Ring, Compojure, etc)
-
-### Status
-
-[CircleCI-hosted master branch & PR builds](https://circleci.com/gh/protojure)
 
 ### Protoc-plugin Installation
 
@@ -121,7 +115,7 @@ $ cat src/com/example/addressbook.clj
 . <File contents continues -- run the `cat` command above to see your generated output in full>
 ```
 
-We can create a `project.clj` file alongside our project file:
+We can create a `project.clj` file alongside our `.proto` file:
 ```
 (defproject protojure-tutorial "0.0.1-SNAPSHOT"
   :description "FIXME: write description"
