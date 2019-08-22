@@ -41,6 +41,9 @@ make bin
 make install
 ```
 
+Note that make install will place the protoc-plugin binary in /usr/local/bin. Ensure /usr/local/bin is in your PATH
+env var, or move the binary to an appropriate location.
+
 This and all following steps rely on the presence of a jdk and [Leiningen](https://leiningen.org/)
 
 ### Quick Start
