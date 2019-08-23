@@ -163,8 +163,8 @@ user=> (new-Person {:name "Jane Doe"})
 #com.example.addressbook.Person{:name "Jane Doe", :id 0, :email "", :phones []}
 ```
 
-We can then seralize this in-memory clj representation of the pb message to the protocol buffer bytes serialization by
-requiring the `protojure.protobuf` namespace from the [protojure lib](https://github.com/protojure/lib):
+We can then transform this in-memory clj representation to the protocol buffer bytes representation by requiring the
+protojure.protobuf namespace from the protojure lib [protojure lib](https://github.com/protojure/lib):
 
 ```
 user=> (require '[protojure.protobuf :as protojure])
@@ -177,7 +177,7 @@ For illustration purposes, here is the native java byte array in a clojure vecto
 user=> (into [] (protojure/->pb (new-Person {:name "Jane Doe"})))
 [10 8 74 97 110 101 32 68 111 101]
 ```
-In order to deseralize an array of bytes, we use the `pb-><Message name here>` form from the generated code (here, our
+In order to deserialize an array of bytes, we use the `pb-><Message name here>` form from the generated code (here, our
 ns `com.example.addressbook`):
 ```
 user=> (pb->Person (byte-array [10 8 74 97 110 101 32 68 111 101]))
@@ -220,19 +220,34 @@ service Greeter {
 
 The service definition defines an endpoint (often reachable at some well-known URL or IP), called Greeter. The Greeter service
 exposes a method called Hello. We may interact with the Hello method by contacting the Greeter service and sending
-a HelloRequest message. Refer to [Protocol Buffers in clj](#protocol-buffers-in-clj) above for a walkthrough of protobuf
+a Person message. Refer to [Protocol Buffers in clj](#protocol-buffers-in-clj) above for a walkthrough of protobuf
 with protojure. 
 
 The message definition of HelloResponse is just like the `message Person` definition discussed in the previous section.
 
-Assume we have a terminal open locally, and that the
-[`hello` example](https://github.com/protojure/protoc-plugin/tree/master/examples/hello) from the
-[Protojure protoc-plugin](https://github.com/protojure/protoc-plugin/tree/master/examples/hello) repository is running
-locally (perhaps by having cloned that repository, opening a different terminal, and running `lein run` from the cloned
-repository root directory).
+For our next steps, first open a new terminal and run:
 
-From our terminal, cd to a directory of your choice and populate `greeter.proto` with the contents of the first code
-block at the start of this section that begins:
+```
+lein new protojure demo-server
+cd demo-server && make all
+lein run
+```
+
+Alternatively, refer to and run the[`hello` example](https://github.com/protojure/protoc-plugin/tree/master/examples/hello) from the
+[Protojure protoc-plugin](https://github.com/protojure/protoc-plugin/tree/master/examples/hello).
+
+Note: Whichever approach is used, its important to ensure that the `.proto` in your server matches the .proto above (or
+vice versa). The `.proto` defines the ABI contract for any client or server.
+
+Open a separate terminal from the one running your server, cd to a directory of your choice and copy the contents of the
+`.proto` in the resources/ directory of your server to your current directory:
+
+```
+cp <path to>/demoserver/resources/addressbook.proto .
+```
+
+Assuming you're using the lein-template demo-server created by `lein new protojure demo-server`, the contents of the
+`.proto` will begin with:
 
 ```
 
@@ -310,8 +325,9 @@ And creating a client connection:
 user=> (def client @(grpc.http2/connect {:uri "http://localhost:8080"}))
 #'user/client
 ```
-Note: The `@` is a syntactic shortcut within [clojure for promises](https://clojuredocs.org/clojure.core/promise).
-Without the deref, we would be interring a ref to the client 'Promise', not the eventually returned connected client.
+Note: Many calls in the SDK return a [promise](https://clojuredocs.org/clojure.core/promise) and we therefore 
+[deref](https://clojure.github.io/clojure/clojure.core-api.html#clojure.core/deref) the calls to make them synchronous
+for illustration purposes.
 
 Now we can use our `call-Hello` function from above, and with the protoc-plugin example `hello` running we will receive
 a HelloResponse message (you can see this message defined in the `greeter.proto` content above):
