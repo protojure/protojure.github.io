@@ -123,11 +123,11 @@ We can create a `project.clj` file alongside our `.proto` file:
             :url "https://www.apache.org/licenses/LICENSE-2.0"
             :year 2019
             :key "apache-2.0"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.0.0"]
-                 [com.google.protobuf/protobuf-java "3.6.1"]])
+                 [protojure "1.0.1"]
+                 [com.google.protobuf/protobuf-java "3.11.1"]])
 
 ```
 
@@ -299,16 +299,16 @@ OpenJDK 64-Bit Server VM 1.8.0_222-8u222-b10-1ubuntu1~18.04.1-b10
     Exit: Control+D or (exit) or (quit)
  Results: Stored in vars *1, *2, *3, an exception in *e
 
-user=> (use 'com.example.addressbook.Greeter)
+user=> (require '[com.example.addressbook.Greeter.client :as greeter])
 WARNING: take already refers to: #'clojure.core/take in namespace: protojure.grpc.client.utils, being replaced by: #'protojure.grpc.client.utils/take
 nil
 
 ```
 
-We can see that one of the var's refer'd into our repl is `call-Hello`:
+We can see that one of the var's refer'd into our repl is `greeter/Hello`:
 ```
-user=> ca<Tab for auto complete options>
-call-Hello
+user=> greeter/He<Tab for auto complete options>
+Hello
 ```
 
 In order to invoke the client call, we'll need to create a client. We do this by requiring the protojure-lib ns below:
@@ -325,10 +325,10 @@ Note: Many calls in the SDK return a [promise](https://clojuredocs.org/clojure.c
 [deref](https://clojure.github.io/clojure/clojure.core-api.html#clojure.core/deref) the calls to make them synchronous
 for illustration purposes.
 
-Now we can use our `call-Hello` function from above, and with the protoc-plugin example `hello` running we will receive
+Now we can use our `Hello` function from above, and with the protoc-plugin example `hello` running we will receive
 a HelloResponse message (you can see this message defined in the `greeter.proto` content above):
 ```
-user=> @(call-Hello client {:name "Janet Johnathan Doe"})
+user=> @(greeter/Hello client {:name "Janet Johnathan Doe"})
 #com.example.addressbook.HelloResponse{:message "Hello, Janet Johnathan Doe"}
 
 ```
@@ -394,7 +394,7 @@ service Greeter {
 
 * Client
 ```
-@(call-Hello @(grpc.http2/connect {:uri "http://localhost:8080"}) {:name "Janet Johnathan Doe"})
+@(greeter/Hello @(grpc.http2/connect {:uri "http://localhost:8080"}) {:name "Janet Johnathan Doe"})
 ```
 * Server Handler
 
