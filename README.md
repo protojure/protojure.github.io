@@ -471,7 +471,7 @@ Excerpt:
 ```
 
 #### Clojure Docs
-* [Protojure lib cljdoc](https://cljdoc.org/d/protojure/protojure/1.0.0)
+* [Protojure lib cljdoc](https://cljdoc.org/d/protojure/protojure)
 
 #### Contributing
 
