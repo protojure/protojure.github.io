@@ -126,7 +126,7 @@ We can create a `project.clj` file alongside our `.proto` file:
   :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.0.1"]
+                 [protojure "1.1.0"]
                  [com.google.protobuf/protobuf-java "3.11.1"]])
 
 ```
@@ -272,11 +272,11 @@ If we create another file called `project.clj` in our current directory with con
             :url "https://www.apache.org/licenses/LICENSE-2.0"
             :year 2019
             :key "apache-2.0"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.0.0"]
-                 [com.google.protobuf/protobuf-java "3.6.1"]
+                 [protojure "1.1.0"]
+                 [com.google.protobuf/protobuf-java "3.11.1"]
                  ;; -- PROTOC-GEN-CLOJURE HTTP/2 Client Lib Dependency --
                  [org.eclipse.jetty.http2/http2-client "9.4.17.v20190418"]]
   :source-paths ["."])
