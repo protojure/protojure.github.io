@@ -37,7 +37,7 @@ Protojure is a portmanteau of **Proto**-col Buffers and Clo-**jure**
 Download the latest [Release](https://github.com/protojure/protoc-plugin/releases) and make it executable in your path.
 
 ```
-sudo curl -L https://github.com/protojure/protoc-plugin/releases/download/v0.7.0/protoc-gen-clojure --output /usr/local/bin/protoc-gen-clojure
+sudo curl -L https://github.com/protojure/protoc-plugin/releases/download/v0.8.2/protoc-gen-clojure --output /usr/local/bin/protoc-gen-clojure
 sudo chmod +x /usr/local/bin/protoc-gen-clojure
 ```
 
@@ -127,9 +127,9 @@ We can create a `project.clj` file alongside our `.proto` file:
   :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.2.0"]
+                 [protojure "1.5.2"]
                  [protojure/google.protobuf "0.9.1"]
-                 [com.google.protobuf/protobuf-java "3.11.1"]])
+                 [com.google.protobuf/protobuf-java "3.12.2"]])
 
 ```
 
@@ -268,15 +268,18 @@ Next, create another file called `project.clj` in our current directory with con
   :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.2.0"]
+                 [protojure "1.5.2"]
                  [protojure/google.protobuf "0.9.1"]
-                 [com.google.protobuf/protobuf-java "3.11.1"]
-                 ;; -- PROTOC-GEN-CLOJURE HTTP/2 Client Lib Dependency --
-                 [org.eclipse.jetty.http2/http2-client "9.4.17.v20190418"]]
+                 [com.google.protobuf/protobuf-java "3.12.2"]
+                 ;; -- PROTOC-GEN-CLOJURE HTTP/2 Client Lib Dependencies --
+                 [org.eclipse.jetty.http2/http2-client "9.4.20.v20190813"]
+                 [org.eclipse.jetty/jetty-alpn-java-client "9.4.28.v20200408"]
+                 ;; -- Jetty Client Dep --
+                 [org.ow2.asm/asm "8.0.1"]]
   :source-paths ["."])
 
 ```
-Save it, and open a REPL
+Save it, and run a REPL
 ```
 $ lein repl
 nREPL server started on port 34903 on host 127.0.0.1 - nrepl://127.0.0.1:34903
@@ -328,10 +331,51 @@ user=> @(greeter/Hello client {:name "Janet Johnathan Doe"})
 
 ```
 
-The log for the previously deployed server should reveal that some traffic was received.
+If we go back to the source code of the running server (the output of `lein new protojure demo-server` above) and apply the below patch (remove the lines marked
+  with `-` and add the lines marked with `+`):
 
 ```
-INFO  io.pedestal.http - {:msg "POST /com.example.addressbook.Greeter/Hello", :line 80}
+diff --git a/src/demo_server/service.clj b/src/demo_server/service.clj
+index 51c63f0..b480bec 100644
+--- a/src/demo_server/service.clj
++++ b/src/demo_server/service.clj
+@@ -8,7 +8,9 @@
+             [protojure.pedestal.core :as protojure.pedestal]
+             [protojure.pedestal.routes :as proutes]
+             [com.example.addressbook.Greeter.server :as greeter]
+-            [com.example.addressbook :as addressbook]))
++            [com.example.addressbook :as addressbook]
++            [com.example.addressbook :as addressbook]
++            [io.pedestal.log :as log]))
+
+ (defn about-page
+   [request]
+@@ -40,6 +42,7 @@
+   greeter/Service
+   (Hello
+     [this {{:keys [name]} :grpc-params :as request}]
++    (log/info "Processing com.example.addressbook.Greeter/Hello invocation with request: " name)
+     {:status 200
+      :body {:message (str "Hello, " name)}}))
+
+
+```
+
+Stop the running demo-server process and restart with `lein run`.
+
+From your client repl, you can now re-run:
+
+```
+user=> (def client @(grpc.http2/connect {:uri "http://localhost:8080"}))
+#'user/client
+user=> @(greeter/Hello client {:name "Janet Johnathan Doe"})
+#com.example.addressbook.HelloResponse{:message "Hello, Janet Johnathan Doe"}
+```
+After invoking the client call against the `demo-server` above, viewing the logs
+of the `lein run` demo-server will show:
+```
+20-07-08 12:39:18 mrkiouak INFO [demo-server.service:116] - {"Processing com.example.addressbook.Greeter/Hello invocation with request: " "Janet Johnathan Doe", :line 44}
+
 ```
 
 Congratulations, you've invoked a remote procedure call round trip with the GRPC protocol using Clojure on both ends.
