@@ -37,7 +37,7 @@ Protojure is a portmanteau of **Proto**-col Buffers and Clo-**jure**
 Download the latest [Release](https://github.com/protojure/protoc-plugin/releases) and make it executable in your path.
 
 ```
-sudo curl -L https://github.com/protojure/protoc-plugin/releases/download/v0.8.2/protoc-gen-clojure --output /usr/local/bin/protoc-gen-clojure
+sudo curl -L https://github.com/protojure/protoc-plugin/releases/download/v0.9.3/protoc-gen-clojure --output /usr/local/bin/protoc-gen-clojure
 sudo chmod +x /usr/local/bin/protoc-gen-clojure
 ```
 
@@ -127,9 +127,9 @@ We can create a `project.clj` file alongside our `.proto` file:
   :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.5.2"]
+                 [protojure "1.5.11"]
                  [protojure/google.protobuf "0.9.1"]
-                 [com.google.protobuf/protobuf-java "3.12.2"]])
+                 [com.google.protobuf/protobuf-java "3.13.0"]])
 
 ```
 
@@ -268,9 +268,9 @@ Next, create another file called `project.clj` in our current directory with con
   :dependencies [[org.clojure/clojure "1.10.1"]
 
                  ;; -- PROTOC-GEN-CLOJURE --
-                 [protojure "1.5.2"]
+                 [protojure "1.5.11"]
                  [protojure/google.protobuf "0.9.1"]
-                 [com.google.protobuf/protobuf-java "3.12.2"]
+                 [com.google.protobuf/protobuf-java "3.13.0"]
                  ;; -- PROTOC-GEN-CLOJURE HTTP/2 Client Lib Dependencies --
                  [org.eclipse.jetty.http2/http2-client "9.4.20.v20190813"]
                  [org.eclipse.jetty/jetty-alpn-java-client "9.4.28.v20200408"]
@@ -512,4 +512,4 @@ Excerpt:
 
 ## Contributing
 
-We cannot (yet) accept outside contributions to the code base at this time. Please check for updates in the future regarding acceptance of outside contributions.
+Pull requests welcome.  Please be sure to include a [DCO](https://en.wikipedia.org/wiki/Developer_Certificate_of_Origin) in any commit messages.
