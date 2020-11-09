@@ -1,3 +1,5 @@
+[//]: # (Change mustache delimiter {{=<% %>=}})
+
 # Protojure
 
 Protojure is first-class [Clojure](https://clojure.org/) support for
@@ -333,6 +335,7 @@ user=> @(greeter/Hello client {:name "Janet Johnathan Doe"})
 
 If we go back to the source code of the running server (the output of `lein new protojure demo-server` above) and apply the below patch (remove the lines marked
   with `-` and add the lines marked with `+`):
+
 
 ```
 diff --git a/src/demo_server/service.clj b/src/demo_server/service.clj
