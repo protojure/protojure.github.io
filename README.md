@@ -435,7 +435,7 @@ service Greeter {
 ```
 * Server Handler
 
-{% raw %}
+[//]: # ({% raw %})
 ```
 (deftype Greeter []
   greeter/Service
@@ -444,7 +444,7 @@ service Greeter {
     {:status 200
      :body {:message (str "Hello, " name)}}))
 ```
-{% endraw %}
+[//]: # ({% endraw %})
 
 Include the below in the interceptors passed to
 the pedestal routes key:
@@ -467,7 +467,7 @@ Simply return a [core.async](https://github.com/clojure/core.async)
 instead of a map as above in the unary example
 
 * Server
-{% raw %}
+[//]: # ({% raw %})
 ```
 (deftype Greeter []
   greeter/Service
@@ -481,7 +481,7 @@ instead of a map as above in the unary example
       {:status 200
        :body resp-chan})))
 ```
-{% endraw %}
+[//]: # ({% endraw %})
 
 
 ##### Client Streaming Example
