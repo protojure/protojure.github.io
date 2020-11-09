@@ -1,4 +1,4 @@
-[//]: # (Change mustache delimiter {{=<% %>=}})
+{{=<% %>=}}
 
 # Protojure
 
