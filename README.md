@@ -334,7 +334,7 @@ user=> @(greeter/Hello client {:name "Janet Johnathan Doe"})
 If we go back to the source code of the running server (the output of `lein new protojure demo-server` above) and apply the below patch (remove the lines marked
   with `-` and add the lines marked with `+`):
 
-{% raw %}
+[//]: # ({% raw %})
 ```
 diff --git a/src/demo_server/service.clj b/src/demo_server/service.clj
 index 51c63f0..b480bec 100644
@@ -360,7 +360,7 @@ index 51c63f0..b480bec 100644
 
 
 ```
-{% endraw %}
+[//]: # ({% endraw %})
 
 Stop the running demo-server process and restart with `lein run`.
 
