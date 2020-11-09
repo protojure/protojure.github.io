@@ -1,5 +1,3 @@
-{{=<% %>=}}
-
 # Protojure
 
 Protojure is first-class [Clojure](https://clojure.org/) support for
@@ -336,7 +334,7 @@ user=> @(greeter/Hello client {:name "Janet Johnathan Doe"})
 If we go back to the source code of the running server (the output of `lein new protojure demo-server` above) and apply the below patch (remove the lines marked
   with `-` and add the lines marked with `+`):
 
-
+{% raw %}
 ```
 diff --git a/src/demo_server/service.clj b/src/demo_server/service.clj
 index 51c63f0..b480bec 100644
@@ -347,7 +345,6 @@ index 51c63f0..b480bec 100644
              [protojure.pedestal.routes :as proutes]
              [com.example.addressbook.Greeter.server :as greeter]
 -            [com.example.addressbook :as addressbook]))
-+            [com.example.addressbook :as addressbook]
 +            [com.example.addressbook :as addressbook]
 +            [io.pedestal.log :as log]))
 
@@ -363,6 +360,7 @@ index 51c63f0..b480bec 100644
 
 
 ```
+{% endraw %}
 
 Stop the running demo-server process and restart with `lein run`.
 
